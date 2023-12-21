@@ -28,7 +28,7 @@ export default function DataInsert() {
         } else if (!image) {
             toast.error('Please Upload Image');
         } else {
-            console.log(image);
+            // console.log(image);
             const formData = new FormData();
             formData.append('pname', product);
             formData.append('catg', category);

@@ -17,7 +17,7 @@ function Dataview() {
         fetch('https://sample.thefuturefame.com/allItems')
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 setRecords(data)
             })
     }, [])
