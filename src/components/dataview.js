@@ -17,6 +17,7 @@ function Dataview() {
         fetch('https://sample.thefuturefame.com/allItems')
             .then(res => res.json())
             .then(data => {
+                console.log(data);
                 setRecords(data)
             })
     }, [])
@@ -76,6 +77,7 @@ function Dataview() {
                                     <th>Product Name</th>
                                     <th>Category</th>
                                     <th>Cost</th>
+                                    <th>Image</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -87,6 +89,7 @@ function Dataview() {
                                             <td>{records.pname}</td>
                                             <td>{records.catg}</td>
                                             <td>{records.cost}</td>
+                                            <td><img src={records.icon} width={50} height={50} /></td>
                                             <td><FaEye onClick={(e) => HandleView(records.id)} /> <FaPenToSquare onClick={(e) => HandleEdit(records.id)} /> <FaTrash style={{ color: '#FF7F7F' }} onClick={(e) => HandleDelete(records.id)} /></td>
                                         </tr>
                                     ))

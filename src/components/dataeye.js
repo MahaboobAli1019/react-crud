@@ -18,7 +18,7 @@ export default function DataEye() {
             .then(data => {
                 setRecords(data); // assigning value to the records variable
             })
-    }, [setRecords,id])
+    }, [setRecords, id])
     return (
         <>
             <div className='container'>
@@ -54,6 +54,10 @@ export default function DataEye() {
                                             className='form-control'
                                             value={records.cost}
                                         />
+                                    </div>
+                                    <div className='col-md-12 mb-2'>
+                                        <label className='m-3'>Image</label><br />
+                                        <img src={`https://sample.thefuturefame.com/storage/images/categories/${records.icon}`} width={250} height={250} />
                                     </div>
                                     <div className='row mt-3'>
                                         <div className='col-md-12'>

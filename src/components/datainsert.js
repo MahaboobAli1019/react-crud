@@ -13,25 +13,35 @@ export default function DataInsert() {
     const [product, setProduct] = useState('');
     const [category, setCategory] = useState('');
     const [cost, setCost] = useState('');
+    const [image, setImage] = useState(null); // Changed to null
 
     // Function to Handal Submit
     const HandalSubmit = useCallback((event) => {
         event.preventDefault();
-        if (product === '') {
+
+        if (!product.trim()) {
             toast.error('Please Enter Product Name');
-        } else if (category === '') {
+        } else if (!category.trim()) {
             toast.error('Please Enter Category Name');
-        } else if (cost === '') {
+        } else if (!cost.trim()) {
             toast.error('Please Enter Cost');
-        }
-        else {
-            axios.post("https://sample.thefuturefame.com/AddProduct", {
-                pname: product,
-                catg: category,
-                cost: cost
+        } else if (!image) {
+            toast.error('Please Upload Image');
+        } else {
+            console.log(image);
+            const formData = new FormData();
+            formData.append('pname', product);
+            formData.append('catg', category);
+            formData.append('cost', cost);
+            formData.append('icon', image);
+
+            axios.post("https://sample.thefuturefame.com/AddProduct", formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             })
-                .then((data) => {
-                    if (data.status === 200) {
+                .then((response) => {
+                    if (response.status === 200) {
                         toast.success('Saved Successfully', {
                             autoClose: 500,
                             onClose: () => {
@@ -44,9 +54,12 @@ export default function DataInsert() {
                         toast.error("Data Not Saved");
                     }
                 })
+                .catch((error) => {
+                    toast.error("Error occurred while saving data.");
+                    console.error("Error:", error);
+                });
         }
-    }, [product, category, cost, navigate])
-
+    }, [product, category, cost, image, navigate]);
     return (
         <>
             <div className='container'>
@@ -84,6 +97,17 @@ export default function DataInsert() {
                                             className='form-control'
                                             value={cost}
                                             onChange={(e) => setCost(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className='col-md-12 mb-2'>
+                                        <label>Image</label>
+                                        <input
+                                            type='file'
+                                            className='form-control'
+                                            onChange={(e) => {
+                                                console.log(e.target.files[0]);
+                                                setImage(e.target.files[0])
+                                            }}
                                         />
                                     </div>
                                     <div className='row mt-3'>
